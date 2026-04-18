@@ -3,6 +3,8 @@ package com.pml.escola.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pml.escola.dto.TurmaDTO;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -160,6 +162,10 @@ public class Turma {
 		relat.append(String.format("MÉDIA DA TURMA: %.2f\n", (notaTotal/quantAlunos)));
 		relat.append(String.format("PORCENTAGEM DE APROVADOS: %.2f%%\n",(aprovados*100.0/quantAlunos)));
 		return relat.toString();
+	}
+
+	public TurmaDTO dto() {
+    	return new TurmaDTO(idTurma, relatorio());
 	}
 
 }

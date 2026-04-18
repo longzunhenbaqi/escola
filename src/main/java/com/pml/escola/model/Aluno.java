@@ -3,6 +3,8 @@ package com.pml.escola.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pml.escola.dto.AlunoDTO;
+
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -141,6 +143,8 @@ public class Aluno {
 		return String.format("Aluno %s (%d) com nota %.2f",nome, registro, notaFinal());
 	}
 
-	
+	public AlunoDTO dto() {
+   		return new AlunoDTO(registro, nome, notaFinal());
+	}
 
 }

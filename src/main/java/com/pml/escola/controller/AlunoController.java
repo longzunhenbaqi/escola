@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pml.escola.dto.AlunoDTO;
 import com.pml.escola.model.Aluno;
 
 import jakarta.persistence.EntityManager;
@@ -32,10 +33,10 @@ public class AlunoController {
     }
 
     @GetMapping("/{registro}")
-    public Aluno localizarAluno(@PathVariable int registro){
+    public AlunoDTO localizarAluno(@PathVariable int registro){
         EntityManager manager = emf.createEntityManager();
         Aluno aluno = manager.find(Aluno.class, registro);
-        return aluno;
+        return aluno.dto();
     }
 
     @PutMapping("/lancar/{registro}/{nota}")
