@@ -23,33 +23,35 @@ public class AlunoController {
     private EntityManagerFactory emf;
 
     @PostMapping("/criar")
-    public Aluno cadastrarAluno(@RequestBody String nome){
+    public AlunoDTO cadastrarAluno(@RequestBody String nome){
         Aluno novo = new Aluno(nome);
         EntityManager manager = emf.createEntityManager();
         manager.getTransaction().begin();
         manager.persist(novo);
         manager.getTransaction().commit();
-        return novo;
+        return novo.dto();
     }
 
     @GetMapping("/{registro}")
     public AlunoDTO localizarAluno(@PathVariable int registro){
         EntityManager manager = emf.createEntityManager();
         Aluno aluno = manager.find(Aluno.class, registro);
+        if (aluno == null) return null;            
         return aluno.dto();
     }
 
     @PutMapping("/lancar/{registro}/{nota}")
-    public Aluno lancarNota(@PathVariable int registro, @PathVariable double nota){
+    public AlunoDTO lancarNota(@PathVariable int registro, @PathVariable double nota){
         EntityManager manager = emf.createEntityManager();
         Aluno aluno = manager.find(Aluno.class, registro);
         if(aluno!=null){
             aluno.lancarNota(nota);
             manager.getTransaction().begin();
-            manager.persist(aluno);
+            manager.merge(aluno);
             manager.getTransaction().commit();
+            return aluno.dto();
         }
-        return aluno;
+        return null;
     }
 
 }

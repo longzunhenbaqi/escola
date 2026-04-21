@@ -16,14 +16,14 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceUnit;
 
 @RestController
-@RequestMapping("/turmas")
+@RequestMapping("/turma")
 public class TurmaController {
     
     @PersistenceUnit
     private EntityManagerFactory emf;
 
     @PostMapping("/criar/{nome}/{duracao}")
-    public Turma criarTurma(@PathVariable String nome, @PathVariable int duracao){
+    public TurmaDTO criarTurma(@PathVariable String nome, @PathVariable int duracao){
         Turma turma = new Turma(nome, duracao);
         EntityManager  manager = emf.createEntityManager();
 
@@ -31,7 +31,7 @@ public class TurmaController {
         manager.persist(turma);
         manager.getTransaction().commit();
 
-        return turma;
+        return turma.dto();
     }
 
     @GetMapping("/{idTurma}")
